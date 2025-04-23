@@ -1,4 +1,5 @@
 % run this script to update the parameter list to put in "mod_eqns"
+% writes parameter list to "newparamnames.txt"
 clear all;
 
 %% Set parameters

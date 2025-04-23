@@ -1,7 +1,7 @@
 function pars = set_params()
 % Set parameters
-pars.OC0 = 0.00115398; %0.00115398; % OC_init
-pars.OB0 = 0.00501324; %0.00501324; %OB_init;
+pars.OC0 = 0.00115398; 
+pars.OB0 = 0.00501324; 
 
 %% Volumes
 pars.Vp = 14; % plasma volume
@@ -10,7 +10,7 @@ pars.Vint = 24; % intracellular volume
 %% PTH model
 % PTmax
 pars.PTout = 0.0001604; % OpenBoneMin.cpp
-pars.CtriolMax = 2; %4.1029; % OpenBoneMin.cpp
+pars.CtriolMax = 2;  % OpenBoneMin.cpp
 pars.CtriolMin = 0.9; % OpenBoneMin.cpp
 pars.gamCtriol = 12.5033; % OpenBoneMin.cpp CtriolPTgam
 pars.KPTCtriol = 68.3805; % this value was solved using OpenBoneMin.cpp equations for Ctriol50%exp(log(INparenCtriol) / pars.gamCtriol); % OpenBoneMin.cpp Ctriol50
@@ -20,7 +20,7 @@ pars.delta511 = 0.7; %0.8; %0.9; % Gaweda et al 2021
 
 
 % PTG
-pars.kdegPTG = 0.02; % 2 * T70 * 0.85 + 2 * 0.15 * T70; solved from OpenBoneMin.cpp (seee 2024-10-04 notes)
+pars.kdegPTG = 0.02; % 2 * T70 * 0.85 + 2 * 0.15 * T70; solved from OpenBoneMin.cpp 
 pars.T70 = 0.01; % parameter from OpenBoneMin.cpp
 pars.T71 = 0.03; % parameter from OpenBoneMin.cpp
 pars.gamCaEff = 0.9; % parameter from OpenBoneMin.cpp (ScaEffGam)
@@ -36,39 +36,35 @@ pars.gamCaPTH = 11.7387; % T59 from OpenBoneMin.cpp
 pars.KCaPTH = 1.7796; % solved from OpenBoneMin.cpp (T60)
 
 %% Calcitriol model
-pars.kdeg_AOH = 0.05; % T64 in MRG fgf-phos code
-pars.kbase_AOH = 6.45; %6.47; %6.290120529828519; %6.5 * 0.967710850742849; %6.0; %6.3; % T65 in MRG fgf-phos code
-pars.kdeg_Ctriol = 0.1; % T69 in MRG fgf-phos code
+pars.kdeg_AOH = 0.05; %
+pars.kbase_AOH = 6.45;  % 
+pars.kdeg_Ctriol = 0.1; % 
 
 % PTH impact on AOH
-pars.deltaAOH_PTH = 2; %1.54865; % T67 in MRG fgf-phos code
-pars.gamAOH_PTH = 0.75; %0.111241;  % AlphaOHgam in MRG fgf-phos code
+pars.deltaAOH_PTH = 2; 
+pars.gamAOH_PTH = 0.75; 
 pars.Vmax_PTH_AOH = 1.9037;
 
 % Phos impact on AOH (Phos inhibits AOH)
 pars.gamAOH_Phos = 2; 
 pars.KAOH_Phos = 1.3; 
 pars.PhosMax = 1.8155;
-%pars.PhosEffMax = 1.0195;
-%pars.PhosEff0 = 1.5249;
-%pars.alpha_AOHPhos = 1.5; 
-%pars.rho_AOHPhos = 0.2; 
 
 %% Calcium homeostasis
 % Renal handling (OpenBoneMin)
 pars.GFR0 = 100.0/16.667;
 pars.maxTmESTkid = 0.923737;
 pars.Reabs50 = 1.57322;
-pars.T16 = 1.3; %1.06147;
+pars.T16 = 1.3; 
 pars.PTHconc0 = 2.8;
 
 
 % Gut2Plas_Ca
-CaDay = 40; %88; % 40; %30; % mmol per day ;%88.0; % from OpenBoneMin
+CaDay = 40;  % from OpenBoneMin
 pars.ICa = CaDay/24; % calcium intake, CaDay/24 from OpenBoneMin
 
-pars.KCtriol = 90; % 
-pars.Vmax_CtriolGut_Ca = 0.35; % Stadt & Layton 2023 
+pars.KCtriol = 90; 
+pars.Vmax_CtriolGut_Ca = 0.35; 
 pars.GutAbs_Ca0 = 0.1;
 
 
@@ -82,7 +78,7 @@ pars.T46 = 1.142;
 pars.eta_Bone_Phos = 0.464; % OpenBoneMin -- phosphate scale factor
 
 % Gut2Plas
-PhosDay = 22.6; % mmol/day (average intake of phosphorus is 700 mg which equals 22.6 mmol)
+PhosDay = 22.6; % mmol/day 
 pars.IPhos = PhosDay/24; % Phosphate intake
 pars.Vmax_CtriolGut_Phos = 0.3; % 
 pars.GutAbs_Phos0 = 0.5; % basal gut fractional Phos absorption
@@ -92,13 +88,11 @@ eta = 51.8;
 ECCPhosConcBase = 1.22;
 INTPhosConcBase = 100;
 pars.eta_Ecc2Int = eta; % OpenBoneMin (T49)
-pars.eta_Int2Ecc = eta *(ECCPhosConcBase/INTPhosConcBase); %0.019268; % OpenBoneMin (T55)
+pars.eta_Int2Ecc = eta *(ECCPhosConcBase/INTPhosConcBase); % OpenBoneMin (T55)
 
 % TERI
 pars.TERICL = 62.2; % from OpenBoneMin
 pars.TERIVC = 94.4; % from OpenBoneMin
-%pars.TERIKA = 10.4; % from OpenBoneMin
-%pars.k_TERI = TERICL/TERIVC;
 
 % Bone compartment (Peterson & Riggs update)
 pars.Da = 0.0292; % OpenBoneMin.cpp
@@ -106,7 +100,7 @@ pars.E0RANKL = 3.80338; % OpenBoneMin.cpp
 pars.EmaxL = 0.469779; 
 pars.LsurvOCgam =3.09023;
 
-RANKL0 = 0.4; % L_init
+RANKL0 = 0.4; 
 pars.k2 = 0.112013;
 pars.k3 = 0.00000624;
 pars.k4 = 0.112013;
@@ -129,7 +123,7 @@ pars.EC50PicOC = exp(log(EC50PicOCparen)/pars.PicOCgam);
 
 pars.E0Meff = 0.388267;
 pars.EmaxMeffOC = 3.15667;
-pars.kinOCgam = 6; %8.53065;
+pars.kinOCgam = 6; 
 L_init = 0.4;
 RNK_init = 10.0;
 M0 = pars.k3*RNK_init*L_init/pars.k4;
@@ -142,7 +136,6 @@ pars.ROB0 = ROB1_init;
 
 
 pars.OBfast0 = pars.OB0*pars.FracOBfast;
-%OBslow0 = pars.OB0*(1-pars.FracOBfast);
 
 pars.kb = 0.000605516;
 pars.bigDb = pars.kb*pars.OB0*pars.Pic0/pars.ROB0;
@@ -212,7 +205,6 @@ RX20 = RX2_init;
 pars.RX2Kin = RX2Kout0*RX20;
 pars.E0rx2Kout = 0.125;
 pars.EmaxPTHRX2x = 5;
-%pars.EC50PTHRX2x = ((pars.EmaxPTHRX2x*3.85)/(RX2Kout0 - pars.E0rx2Kout)) - 3.85;
 pars.EC50PTHRX2x = 17.362700711839036;
 
 pars.crebKout = 0.00279513;
@@ -221,23 +213,20 @@ CREB0 = CREB_init;
 pars.crebKin0 = pars.crebKout*CREB0;
 pars.E0crebKin = 0.5;
 pars.EmaxPTHcreb = 3.39745;
-%pars.EC50PTHcreb = ((pars.EmaxPTHcreb*3.85)/(1-pars.E0crebKin)) -  3.85;
 pars.EC50PTHcreb = 12.894716821674301;
 
 HApMRT = 3.60609;
 pars.kLShap = 1/HApMRT;
-%pars.kHApIn = kLShap/pars.OB0;
 
 Q_0 = 100.0;
 T13 = (CaDay/24)/Q_0;
 FracJ14 = 0.107763;
 pars.Bone2Plas_Ca0 = T13*Q_0*(1-FracJ14);
 
-pars.Vmax_Ca_OC = 0.543488 * Q_0 * FracJ14; %J14OCmax = 0.543488
-pars.OCgam = 1.6971; %J14OCgam = 1.6971
+pars.Vmax_Ca_OC = 0.543488 * Q_0 * FracJ14; 
+pars.OCgam = 1.6971;
 
 pars.OC50 = exp(log((pars.Vmax_Ca_OC*(pars.OC0^pars.OCgam)/T13) - (pars.OC0^pars.OCgam))/pars.OCgam); 
-%J14OC50= exp(log((J14OCmax*pow(OC_0,J14OCgam)/T13) - pow(OC_0,J14OCgam))/J14OCgam);
 
 pars.MOCratio0 = M0/pars.OC0;
 pars.MOCratioGam = 0.603754;
@@ -256,7 +245,7 @@ pars.KAGT0 = 513525.02;%520385; % AGT impact, new parameter
 pars.Nrs = 0.8*60; %60; % Leete & Layton  % Hallow et al 2014
 pars.A = 0.0102;  % A_AT1-renin, Hallow et al 2014
 pars.B = 0.95;  % B_AT1-renin in BP-regulation code, Hallow et al 2014
-pars.AT1R0 = 3.75; % female, BP-regulation 13.99; % BP-regulation, get_pars.m %15.8; % AT1-bound_ANGIIeq, Hallow et al 2014
+pars.AT1R0 = 3.75; 
 
 pars.c_ACE = 1.4079 * 60; % (female BP-regulation) 1/hr 0.88492; % 1/min
 pars.c_Chym = 0.1482 * 60; % (female BP-regulation) 1/hr % 0.09315; % 1/min
@@ -277,22 +266,22 @@ pars.h_AT2R  = 12/60; % hours %12; % min
 
 %% RAS impact on bone
 % RANKL effect
-pars.rho_AT1RL = 0.95; %0.97; %0.9; % min value
-pars.alpha_AT1RL = 5; %8; % max value (8-fold from Shimizu in vitro)
-pars.gamma_AT1RL = 3; %4; % steepness
-pars.delta_AT1RL = 16; %14; %10.85; %5.6;
+pars.rho_AT1RL = 0.95;  % min value
+pars.alpha_AT1RL = 5;  % max value (8-fold from Shimizu in vitro)
+pars.gamma_AT1RL = 3;  % steepness
+pars.delta_AT1RL = 16; % half max
 
 % OPG effect
-pars.rho_AT1RO = 0.90; %0.8; 
+pars.rho_AT1RO = 0.90; 
 pars.alpha_AT1RO = 2.5;
 pars.gamma_AT1RO = 2; 
-pars.delta_AT1RO = 14; %8.2;
+pars.delta_AT1RO = 14; 
 
 %% RAS impact on PTH
-pars.rho_AT1RPTH = 0.7; %0.8891; %0.8335; % fit to Grant 1992 data
-pars.alpha_AT1RPTH = 3.2; %2.29; %2.4357; % fit to Grant 1992 data
-pars.gamAT1R_PTH = 1.5; %3.37; %3.6003;  % fit to Grant 1992 data
-pars.KAT1R_PTH = 10; %5.58; % 5.2308; % fit to Grant 1992 data
+pars.rho_AT1RPTH = 0.7;  % fit to Grant 1992 data
+pars.alpha_AT1RPTH = 3.2; % fit to Grant 1992 data
+pars.gamAT1R_PTH = 1.5;  % fit to Grant 1992 data
+pars.KAT1R_PTH = 10; % fit to Grant 1992 data
 
 %% CaSR impact on renin
 pars.rho_CaSR = 0.25;
@@ -301,16 +290,16 @@ pars.gamCaSR = 15;
 pars.KCaSR = 2.6;
 
 %% PTH impact on renin
-pars.rho_PTHrenin =  0.5; %0.65; %0.7;
-pars.alpha_PTHrenin = 2.5; %2; % 2.3; 
+pars.rho_PTHrenin =  0.5; 
+pars.alpha_PTHrenin = 2.5;  
 pars.gamPTH_renin = 3;
 pars.KPTH_renin = 4; 
 
 %% Calcitriol impact on renin
-pars.alpha_ct = 1.11; %1.75;
-pars.rho_ct= 0.8; %0.25;
-pars.gamCt_renin = 1; %2; % 3
-pars.KCt_renin = 180; %95; %100; % 95
+pars.alpha_ct = 1.11; 
+pars.rho_ct= 0.8; 
+pars.gamCt_renin = 1; 
+pars.KCt_renin = 180; 
 
 %% Estrogen effects on bone
 pars.E2scalePicB1 = 0.0000116832;
@@ -327,9 +316,9 @@ pars.gamOCfn = gamOCfnBAS;
 pars.OCbase = 0.001714042543982; 
 
 %% Estrogen impact on RAS
-pars.eRen = 0.15; %1.5; % estrogen impact on renin secretion
-pars.eAGT = 0.15; %0.05;
-pars.eACE = 5; %10; %3.3; %3.5;
-pars.eAT1R = 0.5; %0.15; %3.5;
-pars.eAT2R = 0.05;  %0.5; %0.05;
+pars.eRen = 0.15;  
+pars.eAGT = 0.15; 
+pars.eACE = 5; 
+pars.eAT1R = 0.5; 
+pars.eAT2R = 0.05; 
 end

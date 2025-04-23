@@ -1,5 +1,5 @@
 function dydt = mod_eqns(t,y,params,varargin)
-% Model equations for ca-phosphate model
+% Model equations for ca-RAS-bone model
 
 %% Get variable inputs
 do_PTH = true; % do PTH compartment
@@ -21,9 +21,6 @@ do_CaSRRsec = true;
 % BMD
 do_BMD = true;
 
-% disease states
-%do_CKD = false; % do lower GFR
-
 % drugs
 do_ACEi = false;
 do_ARB = false;
@@ -33,9 +30,9 @@ do_EST = false; % change estrogen with time
 do_EST_RAS = do_EST; % estrogen impact on RAS
 
 % infusion experiments
-%do_TERIiv = false;
 do_ANGII_inf = false;
 
+% settings from varargin
 for ii = 1:2:length(varargin)
     if strcmp(varargin{ii}, 'do_PTH')
         do_PTH = varargin{ii+1};
@@ -51,8 +48,6 @@ for ii = 1:2:length(varargin)
         do_bone = varargin{ii+1};
     elseif strcmp(varargin{ii}, 'do_ANGII_inf')
         do_ANGII_inf = varargin{ii+1};
-    %elseif strcmp(varargin{ii}, 'do_TERIiv')
-        %do_TERIiv = varargin{ii+1};
     elseif strcmp(varargin{ii}, 'do_EST')
         temp = varargin{ii+1};
         do_EST = temp(1);
@@ -142,7 +137,7 @@ BMDfn     = y(34); % normalized
 TERI_CENT = y(35);
 
 %% Set parameter names
-% NOTE: update updatepars.m to get parameter list from set_params()
+% NOTE: run updatepars.m to get ordered parameter list from set_params()
 OC0 = params(1);
 OB0 = params(2);
 Vp = params(3);
@@ -335,7 +330,7 @@ dydt = zeros(length(y),1);
 
 % Concentrations
 CtriolConc  = Ctriol/Vp;
-PTHConc     = (PTH + TERI_CENT)/Vp; %PTH/Vp;
+PTHConc     = (PTH + TERI_CENT)/Vp; 
 CaConc      = Ca/Vp;
 ECCPhosConc = PhosECC/Vp;
 IntPhosConc = PhosInt/Vint;
@@ -347,19 +342,7 @@ else
     EST = 1;
 end
 
-% renal insufficiency
 GFR = GFR0;
-% if do_CKD
-%     GFR = get_GFR(t, GFR0);
-%     rensuff = GFR/GFR0;
-%     alpha = 0.5;
-%     m = (1 - alpha)/(0.9 - 0.16);
-%     temp =  m * (rensuff - 0.16) + alpha;
-%     ScaEff_AOH = min(1, temp);
-% else
-%     GFR = GFR0;
-%     ScaEff_AOH=1;
-% end
 
 %% PTH model
 
@@ -385,20 +368,16 @@ GFR = GFR0;
         AT1REff_PTH = rho_AT1RPTH + (alpha_AT1RPTH - rho_AT1RPTH)*HillFunc(3.5475,gamAT1R_PTH,KAT1R_PTH);
     end
     
-    %FCTD = 0.8859;
-    %CaEff_PTH = 285.6317;
-    %AT1REff_PTH = 1.1392;
     PTH_secretion = AT1REff_PTH*CaEff_PTH*FCTD;
 
 
     % TERI PK
     k_TERI = TERICL / TERIVC;
-    TERIPKin = TERISC * k_TERI; % first order rate subq doing into plasma
+    TERIPKin = TERISC * k_TERI; % first order rate subq dosing into plasma
     % d(TERISC)/dt
     dydt(10) = - TERIPKin;
 
     % d(TERI_CENT)/dt -- from OpenBoneMin
-    %dydt(35) = TERIPKin - TERI_CENT * TERIKA;
     dydt(35) = TERIPKin - TERI_CENT * kdegPTH;
 
 if do_PTH
@@ -410,7 +389,6 @@ if do_PTH
     dydt(2) = PTGprod - kdegPTG * PTG; 
 
     % d(PTH)/dt
-    %dydt(3) = PTH_secretion - kdegPTH*PTH + TERIPKin; 
     dydt(3) = PTH_secretion - kdegPTH*PTH;
 
 end % do_PTH
@@ -421,9 +399,6 @@ end % do_PTH
     etaAOH_PTH = Vmax_PTH_AOH * PTHEffAOH;
 
     % Phosphate inhibits AOH
-    %PhosEff = PhosEff0 - (PhosEff0 * PhosEffMax)*HillFunc(ECCPhosConc, gamAOH_Phos, KAOH_Phos);
-    %etaAOH_Phos = min(1, PhosEff);
-    %etaAOH_Phos = min(1, alpha_AOHPhos - (alpha_AOHPhos - rho_AOHPhos) * PhosEffAOH);
     etaAOH_Phos = min(1, PhosMax * (KAOH_Phos^gamAOH_Phos / (KAOH_Phos^gamAOH_Phos + ECCPhosConc^gamAOH_Phos)));
 if do_Ctriol
     % d(AOH)/dt
@@ -463,7 +438,6 @@ end
 
     % Plas2Bone_Ca
     OB = OBslow + OBfast;
-    %J15 = (T15*P*(1-FracJ15) + T15*P*FracJ15*HAp);
     Plas2Bone_Ca = T15 * Ca * (1 - FracJ15) + T15 * Ca * FracJ15 * HAp;
 
     % Gut2Plas_Ca
@@ -491,7 +465,7 @@ end % do_Ca
     Gut_frac_abs_Phos = GutAbs_Phos0 + Vmax_CtriolGut_Phos * Gut_abs_CtriolEff;
     Gut2Plas_Phos = IPhos * Gut_frac_abs_Phos;
 
-    % Intra2Extra_Phos % intra 2 extracellular and vise versa
+    % Intra2Extra_Phos 
     Ecc2Int_Phos = eta_Ecc2Int * ECCPhosConc;
     Int2Ecc_Phos = eta_Int2Ecc * IntPhosConc;
 
@@ -506,7 +480,7 @@ end % do_Phos
 
 % Bone compartment (from peterson & riggs)
 if do_bone
-% TGFB act induces OC apoptosis
+% TGFBact induces OC apoptosis
 PicOC = E0PicOC + ((EmaxPicOC*TGFBact^PicOCgam)/(TGFBact^PicOCgam + EC50PicOC^PicOCgam));
 
 % RANKL-RANK inhibits OC decay
@@ -668,7 +642,6 @@ if do_RAS
     dydt(26) = R_sec - (log(2)/h_renin) * PRC;
     
     % d(AGT)/dt
-    %PRA = PRC * X_PRCPRA; % From BP code (Hallow 2014)
     PRA = PRC * X_PRCPRA * 2 * (AGT/(AGT + KAGT0));
    
 
