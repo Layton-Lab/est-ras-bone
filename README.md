@@ -11,3 +11,5 @@ by Melissa Stadt and Anita Layton. The manuscript is under review.
 **driver_vary_age.m** run this script to run simulations of age-related estrogen decline with RASi starting at varied ages
 
 **driverSS.m** run this script to compute the model steady state
+
+**./simbiology version** this directory contains a Simbiology version of the model and scripts for running Sobol sensitivity analysis
