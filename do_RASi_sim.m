@@ -1,5 +1,14 @@
 function yvals = do_RASi_sim(do_ARB, do_ACEi, pct_ARB, pct_ACEi,...
                                 age_ARB, age_ACEi, do_EST, tvals)
+% outputs simulation results given settings
+%    do_ARB: do ARB simulation (0 - false, 1 - true)
+%    do_ACEi: do ACEi simulation (0 - false, 1 - true)
+%    pct_ARB: percent inhibition by ARB 
+%    pct_ACEi: percent inhibition by ACEi
+%    age_ARB: age to start ARB
+%    age_ACEi: age to start ACEi
+%    do_EST: do estrogen decline (0 - false, 1 - true)
+%    tvals: time values to integrate over
 %% set initial conditions 
 load("IC/2025-04-18_ICfinal3.mat","IC") % loads IC
 
