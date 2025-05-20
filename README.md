@@ -1,6 +1,6 @@
 # RAS, estrogen, calcium, and bone
-This code is for the manuscript ``A physiology-based mathematical model of the renin-angiotensin system, bone remodeling, and calcium homeostasis: Effects of estrogen and renin-angiotensin system inhibitors''
-by Melissa Stadt and Anita Layton. The manuscript is under review.
+This code is for the manuscript [Stadt and Layton, "A physiology-based mathematical model of the renin-angiotensin system, bone remodeling, and calcium homeostasis: Effects of estrogen and renin-angiotensin system inhibitors", submitted](https://www.biorxiv.org/content/10.1101/2025.05.01.651663v2.abstract)
+ The manuscript is under review.
 
 
 ## Key files
